@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs";
 
 import prismadb from "@/src/lib/prismadb";
 
-// Route to create a new user
+// Route to create a new store
 
 export async function POST(req: Request) {
   try {
