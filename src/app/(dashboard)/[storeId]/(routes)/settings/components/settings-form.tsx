@@ -22,6 +22,7 @@ import {
 } from "@/src/components/ui/form";
 import { Input } from "@/src/components/ui/input";
 import { useParams, useRouter } from "next/navigation";
+import { AlertModal } from "@/src/components/modals/alert-modal";
 
 interface SettingsFormProps {
   initialData: Store;
@@ -56,8 +57,31 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
     }
   };
 
+  const onDelete = async () => {
+    try {
+      setLoading(true);
+      await axios.delete(`/api/stores/${params.storeId}`);
+      router.refresh();
+      router.push("/");
+      toast.success("Loja excluída");
+    } catch (error) {
+      toast.error(
+        "Confirme se todos os produtos e categorias foram removidas primeiro"
+      );
+    } finally {
+      setLoading(false);
+      setOpen(false);
+    }
+  };
+
   return (
     <>
+      <AlertModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        onConfirm={onDelete}
+        loading={loading}
+      />
       <div className="flex items-center justify-between">
         <Heading
           title="Configurações"
