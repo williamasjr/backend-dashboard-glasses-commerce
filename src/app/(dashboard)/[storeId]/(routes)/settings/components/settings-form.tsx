@@ -23,6 +23,7 @@ import {
 import { Input } from "@/src/components/ui/input";
 import { useParams, useRouter } from "next/navigation";
 import { AlertModal } from "@/src/components/modals/alert-modal";
+import { ApiAlert } from "@/src/components/ui/api-alert";
 
 interface SettingsFormProps {
   initialData: Store;
@@ -126,6 +127,12 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
           </Button>
         </form>
       </Form>
+      <Separator />
+      <ApiAlert
+        title="NEXT_PUBLIC_API_URL"
+        description={`${origin}/api/${params.storeId}`}
+        variant="public"
+      />
     </>
   );
 };
