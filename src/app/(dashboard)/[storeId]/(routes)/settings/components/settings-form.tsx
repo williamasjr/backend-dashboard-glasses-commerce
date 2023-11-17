@@ -24,6 +24,7 @@ import { Input } from "@/src/components/ui/input";
 import { useParams, useRouter } from "next/navigation";
 import { AlertModal } from "@/src/components/modals/alert-modal";
 import { ApiAlert } from "@/src/components/ui/api-alert";
+import { UseOrigin } from "@/src/hooks/use-origin";
 
 interface SettingsFormProps {
   initialData: Store;
@@ -38,6 +39,7 @@ type SettingsFormValues = z.infer<typeof formSchema>;
 export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   const params = useParams();
   const router = useRouter();
+  const origin = UseOrigin();
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
