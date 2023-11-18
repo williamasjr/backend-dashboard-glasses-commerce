@@ -24,7 +24,6 @@ import {
 } from "@/src/components/ui/form";
 import { Input } from "@/src/components/ui/input";
 import { AlertModal } from "@/src/components/modals/alert-modal";
-import { ApiAlert } from "@/src/components/ui/api-alert";
 import ImageUpload from "@/src/components/ui/image-upload";
 
 const formSchema = z.object({
@@ -43,7 +42,6 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
 }) => {
   const params = useParams();
   const router = useRouter();
-  const origin = UseOrigin();
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -173,11 +171,6 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
         </form>
       </Form>
       <Separator />
-      <ApiAlert
-        title="NEXT_PUBLIC_API_URL"
-        description={`${origin}/api/${params.storeId}`}
-        variant="public"
-      />
     </>
   );
 };
