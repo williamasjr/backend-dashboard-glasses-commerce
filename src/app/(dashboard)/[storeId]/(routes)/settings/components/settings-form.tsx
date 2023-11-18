@@ -57,6 +57,8 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
       toast.success("Loja Atualizada.");
     } catch (error) {
       toast.error("Algo deu errado!");
+    } finally {
+      setLoading(false);
     }
   };
 
