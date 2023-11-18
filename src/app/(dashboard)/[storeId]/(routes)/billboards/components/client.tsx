@@ -1,14 +1,19 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-
 import { PlusIcon } from "lucide-react";
 
 import { Button } from "@/src/components/ui/button";
 import { Heading } from "@/src/components/ui/heading";
 import { Separator } from "@/src/components/ui/separator";
+import { BillboardColumn, columns } from "./columns";
+import { DataTable } from "@/src/components/ui/data-table";
 
-export const BillboardClient = () => {
+interface BillboardClientProps {
+  data: BillboardColumn[];
+}
+
+export const BillboardClient: React.FC<BillboardClientProps> = ({ data }) => {
   const router = useRouter();
   const params = useParams();
 
@@ -16,17 +21,18 @@ export const BillboardClient = () => {
     <>
       <div className="flex items-center justify-between">
         <Heading
-          title="Billboards (0)"
-          description="Gerencie billboards para sua loja"
+          title={`Billboards (${data.length})`}
+          description="Manage billboards for you store"
         />
         <Button
           onClick={() => router.push(`/${params.storeId}/billboards/new`)}
         >
           <PlusIcon className="mr-2 h-4 w-4" />
-          Adicionar billboard
+          Add New
         </Button>
       </div>
       <Separator />
+      <DataTable searchKey="label" columns={columns} data={data} />
     </>
   );
 };
