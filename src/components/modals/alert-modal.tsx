@@ -29,17 +29,17 @@ export const AlertModal: React.FC<AlertModalProps> = ({
 
   return (
     <Modal
-      title="Você tem certeza?"
-      description="Isso não poderá ser desfeito"
+      title="Are you shure?"
+      description="It's can't be undo"
       isOpen={isOpen}
       onClose={onClose}
     >
       <div className="pt-6 space-x-2 flex items-center justify-end w-full">
         <Button disabled={loading} variant="outline" onClick={onClose}>
-          Cancelar
+          Cancel
         </Button>
         <Button disabled={loading} variant="destructive" onClick={onConfirm}>
-          Continuar
+          Continue
         </Button>
       </div>
     </Modal>

@@ -7,8 +7,8 @@ import { ToasterProvider } from "../providers/toast-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Painel de controle do administrador",
-  description: "Painel de controle do administrador",
+  title: "Administrator dashboard",
+  description: "Administrator dashboard",
 };
 
 export default function RootLayout({

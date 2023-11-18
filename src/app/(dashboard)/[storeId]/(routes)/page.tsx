@@ -11,7 +11,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
     },
   });
 
-  return <div>Loja atual: {store?.name}</div>;
+  return <div>Current store: {store?.name}</div>;
 };
 
 export default DashboardPage;

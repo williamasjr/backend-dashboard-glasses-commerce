@@ -1,6 +1,7 @@
-POST  http://localhost:3000/api/stores
-Content-Type: application/json
+GET  http://localhost:3000/api/e2f56560-4c3c-41eb-907b-ffa095d5783b/billboards
 
-{
-    "name": "william teste"
-}
+###
+
+GET  http://localhost:3000/api/e2f56560-4c3c-41eb-907b-ffa095d5783b/billboards/b8f352e4-07d4-463a-8cfb-921a3011c57c
+
+

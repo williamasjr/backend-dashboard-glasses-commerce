@@ -53,8 +53,8 @@ export const StoreModal = () => {
 
   return (
     <Modal
-      title="Criar Loja"
-      description="Adiciona uma nova loja para gerenciar produtos e categorias"
+      title="Create Store"
+      description=" Add a new store to manager products and categories"
       isOpen={storeModal.isOpen}
       onClose={storeModal.onClose}
     >
@@ -67,7 +67,7 @@ export const StoreModal = () => {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nome</FormLabel>
+                    <FormLabel>Name</FormLabel>
                     <FormControl>
                       <Input
                         disabled={loading}
@@ -85,10 +85,10 @@ export const StoreModal = () => {
                   variant="outline"
                   onClick={storeModal.onClose}
                 >
-                  Cancelar
+                  Cancel
                 </Button>
                 <Button disabled={loading} type="submit">
-                  Continuar
+                  Continue
                 </Button>
               </div>
             </form>
