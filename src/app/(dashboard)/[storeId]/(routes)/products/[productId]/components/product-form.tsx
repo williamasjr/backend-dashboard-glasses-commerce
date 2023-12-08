@@ -1,19 +1,17 @@
 "use client";
 
 import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Category, Color, Image, Product, Size } from "@prisma/client";
-import { useForm } from "react-hook-form";
-import { Trash } from "lucide-react";
-import toast from "react-hot-toast";
 import axios from "axios";
 import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import { Trash } from "lucide-react";
+import { Category, Color, Image, Product, Size } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
 
+import { Input } from "@/src/components/ui/input";
 import { Button } from "@/src/components/ui/button";
-import { Heading } from "@/src/components/ui/heading";
-import { Separator } from "@/src/components/ui/separator";
-
 import {
   Form,
   FormControl,
@@ -23,10 +21,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/src/components/ui/form";
-
-import { Input } from "@/src/components/ui/input";
+import { Separator } from "@/src/components/ui/separator";
+import { Heading } from "@/src/components/ui/heading";
 import { AlertModal } from "@/src/components/modals/alert-modal";
-import ImageUpload from "@/src/components/ui/image-upload";
 import {
   Select,
   SelectContent,
@@ -34,6 +31,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/src/components/ui/select";
+import ImageUpload from "@/src/components/ui/image-upload";
 import { Checkbox } from "@/src/components/ui/checkbox";
 
 const formSchema = z.object({
@@ -47,7 +45,7 @@ const formSchema = z.object({
   isArchived: z.boolean().default(false).optional(),
 });
 
-type ProductsFormValues = z.infer<typeof formSchema>;
+type ProductFormValues = z.infer<typeof formSchema>;
 
 interface ProductFormProps {
   initialData:
@@ -63,8 +61,8 @@ interface ProductFormProps {
 export const ProductForm: React.FC<ProductFormProps> = ({
   initialData,
   categories,
-  colors,
   sizes,
+  colors,
 }) => {
   const params = useParams();
   const router = useRouter();
@@ -73,33 +71,34 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   const [loading, setLoading] = useState(false);
 
   const title = initialData ? "Edit product" : "Create product";
-  const description = initialData ? "Edit a product" : "Add a new product";
-  const toastMessage = initialData ? "Product updated" : "Created product.";
+  const description = initialData ? "Edit a product." : "Add a new product";
+  const toastMessage = initialData ? "Product updated." : "Product created.";
   const action = initialData ? "Save changes" : "Create";
 
-  const form = useForm<ProductsFormValues>({
+  const defaultValues = initialData
+    ? {
+        ...initialData,
+        price: parseFloat(String(initialData?.price)),
+      }
+    : {
+        name: "",
+        images: [],
+        price: 0,
+        categoryId: "",
+        colorId: "",
+        sizeId: "",
+        isFeatured: false,
+        isArchived: false,
+      };
+
+  const form = useForm<ProductFormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData
-      ? {
-          ...initialData,
-          price: parseFloat(String(initialData?.price)),
-        }
-      : {
-          name: "",
-          images: [],
-          price: 0,
-          categoryId: "",
-          colorId: "",
-          sizeId: "",
-          isFeatured: false,
-          isArchived: false,
-        },
+    defaultValues,
   });
 
-  const onSubmit = async (data: ProductsFormValues) => {
+  const onSubmit = async (data: ProductFormValues) => {
     try {
       setLoading(true);
-
       if (initialData) {
         await axios.patch(
           `/api/${params.storeId}/products/${params.productId}`,
@@ -108,12 +107,11 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       } else {
         await axios.post(`/api/${params.storeId}/products`, data);
       }
-
       router.refresh();
       router.push(`/${params.storeId}/products`);
       toast.success(toastMessage);
-    } catch (error) {
-      toast.error("Something went wrong!");
+    } catch (error: any) {
+      toast.error("Something went wrong.");
     } finally {
       setLoading(false);
     }
@@ -125,9 +123,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       await axios.delete(`/api/${params.storeId}/products/${params.productId}`);
       router.refresh();
       router.push(`/${params.storeId}/products`);
-      toast.success("Product deleted");
-    } catch (error) {
-      toast.error("Something went wrong");
+      toast.success("Product deleted.");
+    } catch (error: any) {
+      toast.error("Something went wrong.");
     } finally {
       setLoading(false);
       setOpen(false);
@@ -148,7 +146,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           <Button
             disabled={loading}
             variant="destructive"
-            size="icon"
+            size="sm"
             onClick={() => setOpen(true)}
           >
             <Trash className="h-4 w-4" />
@@ -166,7 +164,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             name="images"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Image</FormLabel>
+                <FormLabel>Images</FormLabel>
                 <FormControl>
                   <ImageUpload
                     value={field.value.map((image) => image.url)}
@@ -185,7 +183,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               </FormItem>
             )}
           />
-          <div className="grid grid-cols-3 gap-8">
+          <div className="md:grid md:grid-cols-3 gap-8">
             <FormField
               control={form.control}
               name="name"
@@ -213,7 +211,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                     <Input
                       type="number"
                       disabled={loading}
-                      placeholder="9.99 "
+                      placeholder="9.99"
                       {...field}
                     />
                   </FormControl>
@@ -325,10 +323,11 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                   <FormControl>
                     <Checkbox
                       checked={field.value}
+                      // @ts-ignore
                       onCheckedChange={field.onChange}
                     />
                   </FormControl>
-                  <div className="space-y-1 leading--none">
+                  <div className="space-y-1 leading-none">
                     <FormLabel>Featured</FormLabel>
                     <FormDescription>
                       This product will appear on the home page
@@ -345,10 +344,11 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                   <FormControl>
                     <Checkbox
                       checked={field.value}
+                      // @ts-ignore
                       onCheckedChange={field.onChange}
                     />
                   </FormControl>
-                  <div className="space-y-1 leading--none">
+                  <div className="space-y-1 leading-none">
                     <FormLabel>Archived</FormLabel>
                     <FormDescription>
                       This product will not appear anywhere in the store.
@@ -366,5 +366,3 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     </>
   );
 };
-
-export default ProductForm;

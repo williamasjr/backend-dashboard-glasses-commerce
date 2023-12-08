@@ -3,14 +3,13 @@ import { auth } from "@clerk/nextjs";
 
 import prismadb from "@/src/lib/prismadb";
 
-// Route to create a new product
-
 export async function POST(
   req: Request,
   { params }: { params: { storeId: string } }
 ) {
   try {
     const { userId } = auth();
+
     const body = await req.json();
 
     const {
@@ -25,7 +24,7 @@ export async function POST(
     } = body;
 
     if (!userId) {
-      return new NextResponse("Unauthenticated", { status: 401 });
+      return new NextResponse("Unauthenticated", { status: 403 });
     }
 
     if (!name) {
@@ -41,19 +40,19 @@ export async function POST(
     }
 
     if (!categoryId) {
-      return new NextResponse("Category Id is required", { status: 400 });
+      return new NextResponse("Category id is required", { status: 400 });
     }
 
     if (!colorId) {
-      return new NextResponse("Color Id is required", { status: 400 });
+      return new NextResponse("Color id is required", { status: 400 });
     }
 
     if (!sizeId) {
-      return new NextResponse("Size Id is required", { status: 400 });
+      return new NextResponse("Size id is required", { status: 400 });
     }
 
     if (!params.storeId) {
-      return new NextResponse("Store ID is required", { status: 400 });
+      return new NextResponse("Store id is required", { status: 400 });
     }
 
     const storeByUserId = await prismadb.store.findFirst({
@@ -64,7 +63,7 @@ export async function POST(
     });
 
     if (!storeByUserId) {
-      return new NextResponse("Unauthorized", { status: 403 });
+      return new NextResponse("Unauthorized", { status: 405 });
     }
 
     const product = await prismadb.product.create({
@@ -92,8 +91,6 @@ export async function POST(
   }
 }
 
-// route to get all products by storeID
-
 export async function GET(
   req: Request,
   { params }: { params: { storeId: string } }
@@ -106,7 +103,7 @@ export async function GET(
     const isFeatured = searchParams.get("isFeatured");
 
     if (!params.storeId) {
-      return new NextResponse("Store ID is required", { status: 400 });
+      return new NextResponse("Store id is required", { status: 400 });
     }
 
     const products = await prismadb.product.findMany({
