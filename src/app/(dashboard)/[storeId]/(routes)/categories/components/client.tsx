@@ -22,19 +22,19 @@ export const CategoryClient: React.FC<CategoryClientProps> = ({ data }) => {
     <>
       <div className="flex items-center justify-between">
         <Heading
-          title={`Categories (${data.length})`}
-          description="Manage categories for you store"
+          title={`Categorias (${data.length})`}
+          description="Gerencia categorias para sua loja"
         />
         <Button
           onClick={() => router.push(`/${params.storeId}/categories/new`)}
         >
           <PlusIcon className="mr-2 h-4 w-4" />
-          Add New
+          Adicionar nova
         </Button>
       </div>
       <Separator />
       <DataTable searchKey="name" columns={columns} data={data} />
-      <Heading title="API" description="API call for Categories" />
+      <Heading title="API" description="Chamadas API para categorias" />
       <Separator />
       <ApiList entityName="categories" entityIdName="categoryId" />
     </>

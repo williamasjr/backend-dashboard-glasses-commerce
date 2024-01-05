@@ -30,7 +30,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
-    toast.success("Billboard Id copied to the clipboard.");
+    toast.success("Billboard Id para o clipboard.");
   };
 
   const onDelete = async () => {
@@ -38,10 +38,10 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       setLoading(true);
       await axios.delete(`/api/${params.storeId}/billboards/${data.id}`);
       router.refresh();
-      toast.success("Billboard deleted");
+      toast.success("Billboard excluído");
     } catch (error) {
       toast.error(
-        "Make sure you remove all categories using this billboard first"
+        "Certifique-se de remover todas as categorias usando esse billboard primeiro"
       );
     } finally {
       setLoading(false);
@@ -60,15 +60,15 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
-            <span className="sr-only">Open menu</span>
+            <span className="sr-only">Abrir menu</span>
             <MoreHorizontal className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuLabel>Ações</DropdownMenuLabel>
           <DropdownMenuItem onClick={() => onCopy(data.id)}>
             <Copy className="mr-2 h-4 w-4" />
-            Copy Id
+            Copiar Id
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
@@ -76,11 +76,11 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
             }
           >
             <Edit className="mr-2 h-4 w-4" />
-            Update
+            Atualizar
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setOpen(true)}>
             <Trash className="mr-2 h-4 w-4" />
-            Delete
+            Excluir
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

@@ -46,12 +46,12 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const title = initialData ? "Edit billboard" : "Create billboard";
-  const description = initialData ? "Edit a billboard" : "Add billboard";
+  const title = initialData ? "Editar billboard" : "Criar billboard";
+  const description = initialData ? "Editar billboard" : "Adicionar billboard";
   const toastMessage = initialData
-    ? "Billboard Updated"
-    : "Created a new billboard.";
-  const action = initialData ? "Save changes" : "Create";
+    ? "Billboard Atualizado"
+    : "Billboard Criado.";
+  const action = initialData ? "Salvar alterações" : "Adicionar";
 
   const form = useForm<BillboardFormValues>({
     resolver: zodResolver(formSchema),
@@ -78,7 +78,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
       router.push(`/${params.storeId}/billboards`);
       toast.success(toastMessage);
     } catch (error) {
-      toast.error("Something went wrong!");
+      toast.error("Algo deu errado!");
     } finally {
       setLoading(false);
     }
@@ -95,7 +95,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
       toast.success("Billboard deleted");
     } catch (error) {
       toast.error(
-        "Make sure you remove all categories using this billboard first"
+        "Certifique-se de remover todas as categories que usam esse billboard primeiro"
       );
     } finally {
       setLoading(false);
@@ -135,7 +135,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
             name="imageUrl"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Background image</FormLabel>
+                <FormLabel>Imagem de fundo</FormLabel>
                 <FormControl>
                   <ImageUpload
                     value={field.value ? [field.value] : []}
@@ -154,11 +154,11 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
               name="label"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>label</FormLabel>
+                  <FormLabel>Nome</FormLabel>
                   <FormControl>
                     <Input
                       disabled={loading}
-                      placeholder="Billboard label"
+                      placeholder="Nome do Billboard"
                       {...field}
                     />
                   </FormControl>

@@ -8,8 +8,8 @@ import { ThemeProvider } from "../providers/theme-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Administrator dashboard",
-  description: "Administrator dashboard",
+  title: "Painel de Administrador",
+  description: "Painel de Administrador",
 };
 
 export default function RootLayout({

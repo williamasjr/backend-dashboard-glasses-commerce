@@ -77,7 +77,7 @@ export default function StoreSwitcher({
         <Command>
           <CommandList>
             <CommandInput placeholder="Search store.." />
-            <CommandEmpty>Store not found.</CommandEmpty>
+            <CommandEmpty>Loja não encontrada.</CommandEmpty>
             <CommandGroup heading="Stores">
               {formattedItems.map((store) => (
                 <CommandItem
@@ -109,7 +109,7 @@ export default function StoreSwitcher({
                 }}
               >
                 <PlusCircle className="mr-2 h-5 w-5" />
-                Create store
+                Criar loja
               </CommandItem>
             </CommandGroup>
           </CommandList>
