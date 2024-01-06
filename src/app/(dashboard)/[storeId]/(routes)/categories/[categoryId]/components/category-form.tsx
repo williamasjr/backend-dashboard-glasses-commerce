@@ -101,7 +101,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
       );
       router.refresh();
       router.push(`/${params.storeId}/categories`);
-      toast.success("category deleted");
+      toast.success("categoria excluída");
     } catch (error) {
       toast.error(
         "Certifique-se de remover todos os produtos usando essa categoria primeiro."
