@@ -257,7 +257,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                     />
                   </FormControl>
                   <div className="space-y-1 leading-none">
-                    <FormLabel>Featured</FormLabel>
+                    <FormLabel>Lançado</FormLabel>
                     <FormDescription>
                       Esse produto vai aparecer na pagina raiz
                     </FormDescription>
